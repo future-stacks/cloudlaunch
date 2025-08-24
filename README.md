@@ -39,7 +39,7 @@ Internet
 ## 🚀 Live Demo
 
 - **Website URL**: http://cloudlaunch-site-bucket-20250823.s3-website-eu-west-1.amazonaws.com/
-- **CloudFront URL**: [Your CloudFront Distribution URL Here] (if implemented)
+- **CloudFront URL**: http://d3ubpddfy195jy.cloudfront.net/
 
 ## 📋 Task 1: S3 Static Website Hosting & IAM
 
@@ -78,9 +78,9 @@ The `cloudlaunch-user` has been configured with the following custom policy:
                 "s3:ListBucket"
             ],
             "Resource": [
-                "arn:aws:s3:::cloudlaunch-site-bucket-[your-suffix]",
-                "arn:aws:s3:::cloudlaunch-private-bucket-[your-suffix]",
-                "arn:aws:s3:::cloudlaunch-visible-only-bucket-[your-suffix]"
+                "arn:aws:s3:::cloudlaunch-site-bucket-20250823",
+                "arn:aws:s3:::cloudlaunch-private-bucket-20250824",
+                "arn:aws:s3:::cloudlaunch-visible-only-bucket-20250824"
             ]
         },
         {
@@ -89,7 +89,7 @@ The `cloudlaunch-user` has been configured with the following custom policy:
             "Action": [
                 "s3:GetObject"
             ],
-            "Resource": "arn:aws:s3:::cloudlaunch-site-bucket-[your-suffix]/*"
+            "Resource": "arn:aws:s3:::cloudlaunch-site-bucket-20250823/*"
         },
         {
             "Sid": "GetPutObjectPrivateBucket",
@@ -98,7 +98,7 @@ The `cloudlaunch-user` has been configured with the following custom policy:
                 "s3:GetObject",
                 "s3:PutObject"
             ],
-            "Resource": "arn:aws:s3:::cloudlaunch-private-bucket-[your-suffix]/*"
+            "Resource": "arn:aws:s3:::cloudlaunch-private-bucket-20250824/*"
         },
         {
             "Sid": "VPCReadOnlyAccess",
@@ -113,7 +113,7 @@ The `cloudlaunch-user` has been configured with the following custom policy:
             "Resource": "*",
             "Condition": {
                 "StringEquals": {
-                    "ec2:Region": "[your-region]"
+                    "ec2:Region": "Europe (Ireland) eu-west-1"
                 }
             }
         }
@@ -133,7 +133,7 @@ The `cloudlaunch-user` has been configured with the following custom policy:
 
 **VPC Name**: `cloudlaunch-vpc`  
 **CIDR Block**: `10.0.0.0/16`  
-**Region**: `[your-region]`
+**Region**: `Europe (Ireland) eu-west-1`
 
 ### Subnet Design
 
@@ -197,9 +197,9 @@ Inbound | MySQL    | 3306 | 10.0.2.0/24 (App subnet only)
 ## 🔐 Access Information
 
 ### AWS Account Details
-- **Account ID**: `[Your 12-digit Account ID]`
-- **Account Alias**: `[Your Account Alias]`
-- **Console URL**: `https://[account-id].signin.aws.amazon.com/console`
+- **Account ID**: `862287594288`
+- **Account Alias**: `cloudlaunchdemo`
+- **Console URL**: `https://cloudlaunchdemo.signin.aws.amazon.com/console`
 
 ### IAM User Credentials
 - **Username**: `cloudlaunch-user`
@@ -222,20 +222,20 @@ aws configure
 aws s3 ls
 
 # Test 2: Access website bucket (should work)
-aws s3 cp s3://cloudlaunch-site-bucket-[suffix]/index.html ./test-download.html
+aws s3 cp s3://cloudlaunch-site-bucket-20250823/index.html ./test-download.html
 
 # Test 3: Upload to private bucket (should work)
 echo "Test file" > test.txt
-aws s3 cp test.txt s3://cloudlaunch-private-bucket-[suffix]/
+aws s3 cp test.txt s3://cloudlaunch-private-bucket-20250824/
 
 # Test 4: Try to delete from private bucket (should fail - no permission)
-aws s3 rm s3://cloudlaunch-private-bucket-[suffix]/test.txt
+aws s3 rm s3://cloudlaunch-private-bucket-20250824/test.txt
 
 # Test 5: List visible-only bucket (should work)
-aws s3 ls s3://cloudlaunch-visible-only-bucket-[suffix]/
+aws s3 ls s3://cloudlaunch-visible-only-bucket-20250824/
 
 # Test 6: Try to access visible-only bucket contents (should fail)
-aws s3 cp s3://cloudlaunch-visible-only-bucket-[suffix]/anyfile.txt ./
+aws s3 cp s3://cloudlaunch-visible-only-bucket-20250824/anyfile.txt ./
 ```
 
 ### VPC Verification
@@ -296,6 +296,9 @@ This project is for educational purposes as part of the AltSchool Cloud Engineer
 ---
 
 **Project Completed**: 24th August 2025 
+
 **Author**: Hope Akpabio
-**Course**: AltSchool of Engineering - Cloud Engineering Track  
+
+**Course**: AltSchool of Engineering - Cloud Engineering Track 
+
 **Assignment**: Third Semester Assignment 1
